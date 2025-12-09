@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Daniel & Brenda</title>
     <link rel="icon" type="image/png" href="https://i.ibb.co/dsJw5wzB/icon.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -14,41 +15,32 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        }
+    </script>
+
     <style>
         /* --- 1. VARIABLES Y BASE --- */
         :root {
             --burgundy: #782626;
-            /* Color Vino Principal */
             --gold: #C5A059;
-            /* Color Dorado */
             --cream: #FAF9F6;
-            /* Fondo Crema Suave */
             --text: #333333;
-            /* Color Texto Principal */
 
             --font-script: 'Pinyon Script', cursive;
-            /* Para Nombres */
             --font-serif: 'Playfair Display', serif;
-            /* Para Títulos y versos */
             --font-body: 'Montserrat', sans-serif;
-            /* Para texto general */
             --font-caps: 'Cinzel', serif;
-            /* Para subtítulos en mayúsculas */
         }
 
-        /* Bloqueo total de la selección de texto en la página */
+        /* Bloqueo de selección */
         body {
             -webkit-user-select: none;
-            /* Chrome, Safari, Opera */
             -moz-user-select: none;
-            /* Firefox */
             -ms-user-select: none;
-            /* Internet Explorer/Edge */
             user-select: none;
-            /* Estándar */
-
-            /* Opcional: Bloquear la visualización del menú contextual (click derecho) */
-            /* pointer-events: none; - NO RECOMENDADO, rompe botones y enlaces */
         }
 
         * {
@@ -63,16 +55,14 @@
             font-family: var(--font-body);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
-            /* Inicialmente ocultamos el scroll hasta que cargue el preloader */
             overflow: hidden;
         }
 
         body.loaded {
             overflow: auto;
-            /* Reactivamos scroll una vez cargado */
         }
 
-        /* Marco Decorativo Fijo */
+        /* Marco Decorativo */
         body::before {
             content: "";
             position: fixed;
@@ -86,7 +76,7 @@
             border-radius: 6px;
         }
 
-        /* --- 2. PRELOADER (Pantalla de carga inicial) --- */
+        /* --- 2. PRELOADER --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -95,7 +85,6 @@
             height: 100%;
             background: var(--cream);
             z-index: 10000;
-            /* Capa superior */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -131,8 +120,7 @@
             }
         }
 
-        /* --- 3. PANTALLA DE BIENVENIDA (Sobre) --- */
-        /* Aparece después del preloader, antes de entrar al sitio */
+        /* --- 3. BIENVENIDA --- */
         #welcome-screen {
             position: fixed;
             inset: 0;
@@ -191,22 +179,20 @@
             text-transform: uppercase;
         }
 
-        /* --- 4. HEADER / PORTADA PRINCIPAL --- */
+        /* --- 4. HEADER --- */
         header {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* LINK DE FONDO ACTUALIZADO */
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://i.ibb.co/4nwjRbR3/IMG-20250701-193415473-HDR.jpg');
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('img/foto_005.jpg');
             background-size: cover;
             background-position: center;
             position: relative;
             padding: 20px;
         }
 
-        /* Efecto Parallax solo en escritorio */
         @media (min-width: 1024px) {
             header {
                 background-attachment: fixed;
@@ -227,7 +213,6 @@
 
         h1 {
             font-family: var(--font-script);
-            /* Tamaño fluido: Mínimo 3rem, Ideal 13% del ancho, Máximo 5.5rem */
             font-size: clamp(3rem, 13vw, 5.5rem);
             color: var(--burgundy);
             line-height: 1.1;
@@ -253,7 +238,7 @@
             width: 100%;
         }
 
-        /* --- 5. ESTILOS GENERALES DE SECCIÓN --- */
+        /* --- 5. SECCIONES --- */
         section {
             padding: 60px 20px;
             position: relative;
@@ -278,47 +263,89 @@
             line-height: 1.2;
         }
 
-        /* --- 6. GALERÍA ESTILO POLAROID --- */
-        .gallery-wrapper {
+        /* Margen extra para separar galería */
+        .gallery-section-margin {
+            margin-top: 100px;
+        }
+
+        /* --- 6. GALERÍA --- */
+        .gallery-container {
             position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .gallery-wrapper {
+            display: grid;
+            grid-template-areas: "slide";
             overflow: hidden;
             width: 100%;
-            min-height: 450px;
-            /* Altura mínima para reservar espacio */
+            align-items: center;
         }
 
         .gallery-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            grid-area: slide;
             opacity: 0;
-            /* Transición suave de fundido */
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1s ease-in-out;
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
             gap: 20px;
             pointer-events: none;
+            width: 100%;
         }
 
         .gallery-slide.active {
-            position: relative;
             opacity: 1;
             pointer-events: auto;
             z-index: 5;
+            position: relative;
         }
 
         .polaroid {
             background: white;
             padding: 10px 10px 35px 10px;
-            /* Espacio inferior tipo polaroid */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 45%;
-            /* Móvil: 2 por fila */
-            max-width: 200px;
+            width: 90%;
+            max-width: 300px;
             transform: rotate(-2deg);
             transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border: 1px solid #eee;
+            display: block;
+        }
+
+        /* Ajustes ESCRITORIO */
+        @media (min-width: 768px) {
+            .polaroid {
+                width: 30%;
+            }
+
+            .gallery-slide {
+                gap: 30px;
+            }
+
+            .polaroid img {
+                height: 200px;
+            }
+        }
+
+        /* Ajustes MÓVIL GALERÍA */
+        @media (max-width: 768px) {
+            .polaroid img {
+                height: 450px;
+            }
+
+            .polaroid {
+                width: 95%;
+                max-width: 100%;
+            }
         }
 
         .polaroid:nth-child(even) {
@@ -331,46 +358,144 @@
             z-index: 10;
         }
 
-        .polaroid img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border: 1px solid #eee;
-            display: block;
+        /* Flechas */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(120, 38, 38, 0.7);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: background 0.3s;
+        }
+
+        .slider-arrow:hover {
+            background: var(--gold);
+        }
+
+        .arrow-prev {
+            left: -10px;
+        }
+
+        .arrow-next {
+            right: -10px;
         }
 
         @media (min-width: 768px) {
-            .polaroid {
-                width: 22%;
+            .arrow-prev {
+                left: -50px;
             }
 
-            /* Escritorio: 4 por fila */
-            .polaroid img {
-                height: 200px;
+            .arrow-next {
+                right: -50px;
             }
         }
 
-        /* --- 7. VIDEO RESPONSIVE --- */
+        /* --- MODAL (Foto Ampliada) --- */
+        #photo-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 11000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #photo-modal.open {
+            display: flex;
+        }
+
+        .modal-polaroid {
+            background: white;
+            padding: 15px 15px 60px 15px;
+            max-width: 90%;
+            max-height: 80vh;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8) rotate(0deg);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+        }
+
+        /* Estado final girado */
+        .modal-polaroid.rotated {
+            transform: scale(1) rotate(10deg);
+            opacity: 1;
+        }
+
+        /* Ajustes MODAL MÓVIL */
+        @media (max-width: 768px) {
+            .modal-polaroid {
+                max-width: 85%;
+                max-height: 70vh;
+                padding: 10px 10px 40px 10px;
+            }
+
+            .modal-polaroid.rotated {
+                transform: scale(1) rotate(10deg);
+            }
+        }
+
+        .modal-polaroid img {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border: 1px solid #ccc;
+        }
+
+        .close-modal-btn {
+            margin-top: 20px;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            z-index: 11001;
+        }
+
+        .close-modal-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        /* --- 7. VIDEO --- */
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
-            /* Aspecto 16:9 */
             height: 0;
             overflow: hidden;
             border: 4px solid var(--white);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 10;
         }
 
-        .video-wrapper video {
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
         }
 
-        /* --- OTROS ESTILOS (Verso, Padres, Contador, Itinerario) --- */
+        /* --- OTROS ESTILOS --- */
         .verse-section {
             background-color: var(--burgundy);
             color: white;
@@ -430,7 +555,7 @@
         }
 
         .countdown-wrap {
-            background: linear-gradient(rgba(120, 38, 38, 0.9), rgba(120, 38, 38, 0.9)), url('https://i.ibb.co/WWGzxv2w/IMG-20250412-213403054.jpg');
+            background: linear-gradient(rgba(120, 38, 38, 0.9), rgba(120, 38, 38, 0.9)), url('img/foto_013.jpg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -615,6 +740,7 @@
             transform: translateY(0);
         }
 
+        /* PÉTALOS FONDO (Más intensidad) */
         #petal-container {
             position: fixed;
             top: 0;
@@ -628,7 +754,8 @@
 
         .petal {
             position: absolute;
-            background-color: rgba(232, 195, 186, 0.6);
+            background-color: rgba(232, 195, 186, 0.85);
+            /* Opacidad aumentada */
             border-radius: 150% 0 150% 0;
             animation: fall linear infinite;
         }
@@ -641,6 +768,42 @@
 
             100% {
                 transform: translate(100px, 110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* FLORES VIDEO */
+        #video-flower-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .video-flower {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            /* Flores blancas suaves */
+            font-size: 20px;
+            animation: fall-flower linear infinite;
+        }
+
+        @keyframes fall-flower {
+            0% {
+                transform: translateY(-10%) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110%) rotate(360deg);
                 opacity: 0;
             }
         }
@@ -665,8 +828,12 @@
     <div id="petal-container"></div>
 
     <audio id="bg-music" loop>
-        <source src="song.mp3" type="audio/mp3">
+        <source src="sound/song.mp3" type="audio/mp3">
     </audio>
+    <audio id="shutter-sound">
+        <source src="sound/camera.wav" type="audio/wav">
+    </audio>
+
     <div class="music-fab paused" onclick="toggleAudio()" id="music-btn">
         <i class="fas fa-music"></i>
     </div>
@@ -702,7 +869,6 @@
     <section class="reveal">
         <div class="container">
             <h2>Con la bendición de</h2>
-
             <div class="parents-grid">
                 <div class="parents-col">
                     <div class="parents-title">Padres del Novio</div>
@@ -717,12 +883,10 @@
                     <div class="name-item">Margarita Corona Soto</div>
                 </div>
             </div>
-
             <div class="dedication-box">
                 "En la memoria y amor eterno de nuestros padres, Daniel y Juana. Desde su celestial morada, sentimos la
                 luz de su guía y la bendición incondicional que nos acompaña en cada paso."
             </div>
-
             <div style="margin-top: 40px; text-align: center;">
                 <div class="parents-title">Padrinos de Velación</div>
                 <div class="name-item" style="color: var(--burgundy); font-weight: bold;">
@@ -740,7 +904,6 @@
     <section class="reveal">
         <div class="container">
             <h2>Itinerario & Lugar</h2>
-
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-icon"><i class="fas fa-church"></i></div>
@@ -763,77 +926,46 @@
                     <div class="activity">Banquete y Baile</div>
                 </div>
             </div>
-
             <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
-
             <div class="location-card">
                 <i class="fas fa-church" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
                 <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Ceremonia</h3>
                 <p style="color: #666; margin-top: 5px;">Iglesia de San Miguel Arcángel</p>
                 <a href="https://share.google/YDzHiqdxFStc7KM9L" target="_blank" class="btn-map">Ver Mapa</a>
             </div>
-
             <div class="location-card">
                 <i class="fas fa-wine-glass" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
                 <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Recepción</h3>
                 <p style="color: #666; margin-top: 5px;">Salón Jardín Marsuí</p>
                 <a href="https://share.google/DR52rUnDC6u5PF0hI" target="_blank" class="btn-map">Ver Ubicación</a>
             </div>
-
         </div>
     </section>
 
-    <section class="reveal">
+    <section class="reveal gallery-section-margin">
         <div class="container">
             <h2>Nuestra Galería</h2>
-            <div class="gallery-wrapper" id="gallery-carousel">
+            <div class="gallery-container">
+                <div class="slider-arrow arrow-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></div>
+                <div class="slider-arrow arrow-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></div>
 
-                <div class="gallery-slide active">
-                    <div class="polaroid"><img src="https://i.ibb.co/d08btgg9/IMG-20250426-185603644-HDR-2.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/xq6YRPS1/IMG-20250427-105024668-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/8g4kMzV3/IMG-20250517-220059294.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/b5snnXkF/IMG-20250701-162815079-HDR.jpg"></div>
-                </div>
-
-                <div class="gallery-slide">
-                    <div class="polaroid"><img src="https://i.ibb.co/4nwjRbR3/IMG-20250701-193415473-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/Fkvmj8XJ/IMG-20250712-144937162-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/0RZHC6fq/IMG-20250713-172556241-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/395DqngZ/IMG-20250725-195107965-HDR.jpg"></div>
-                </div>
-
-                <div class="gallery-slide">
-                    <div class="polaroid"><img src="https://i.ibb.co/Mx7SYpM0/IMG-20250824-164403036-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/BVcVgyFj/IMG-20250907-092639301-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/39rjZrq3/IMG-20250913-141415407.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/tSV2NSV/IMG-20251108-192746397.jpg"></div>
-                </div>
-
-                <div class="gallery-slide">
-                    <div class="polaroid"><img src="https://i.ibb.co/WWGzxv2w/IMG-20250412-213403054.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/xtC2w8rC/IMG-20250426-174400498-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/MD5zQBNb/IMG-20250427-122352067-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/kgtRDQb9/IMG-20250626-171026480-HDR.jpg"></div>
-                </div>
-
-                <div class="gallery-slide">
-                    <div class="polaroid"><img src="https://i.ibb.co/nMZb1drF/IMG-20250701-200124054-HDR.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/Kpsqx6qT/IMG-20250712-084821716-HDR-2.jpg"></div>
-                    <div class="polaroid"><img src="https://i.ibb.co/tww3tMcY/IMG-20251101-194513060-HDR.jpg"></div>
-                </div>
-
+                <div class="gallery-wrapper" id="gallery-carousel"></div>
             </div>
         </div>
     </section>
 
-    <section class="reveal" style="background-color: var(--burgundy); color: white; padding-bottom: 80px;">
-        <h2 style="color: var(--gold);">Nuestra Historia</h2>
-        <div style="max-width: 800px; margin: 0 auto;">
+    <section class="reveal"
+        style="background-color: var(--burgundy); color: white; padding-bottom: 80px; position: relative;">
+        <div id="video-flower-container"></div>
+
+        <h2 style="color: var(--gold); position: relative; z-index: 10;">Nuestra Historia</h2>
+        <div style="max-width: 800px; margin: 0 auto; position: relative; z-index: 10;">
             <div class="video-wrapper">
-                <video controls>
-                    <source src="video.mp4" type="video/mp4">
-                    Tu navegador no soporta video.
-                </video>
+                <iframe id="youtube-player" width="100%" height="100%"
+                    src="https://www.youtube.com/embed/ijmErsexYRw?enablejsapi=1" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
             </div>
         </div>
     </section>
@@ -842,36 +974,183 @@
         <p>Daniel & Brenda | 2026</p>
     </footer>
 
+    <div id="photo-modal">
+        <div class="modal-polaroid" id="modal-content">
+            <img src="" alt="Foto" id="modal-img">
+        </div>
+        <button class="close-modal-btn" onclick="closeModal()">
+            <i class="fas fa-arrow-left"></i> Regresar
+        </button>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
-        // --- 0. PRELOADER (Espera a que carguen todas las imágenes y recursos) ---
+        // Global variable for YouTube player instance
+        let player;
+
+        // Función llamada automáticamente cuando la API de YouTube esté lista
+        function onYouTubeIframeAPIReady() {
+            const bgMusic = document.getElementById('bg-music');
+
+            player = new YT.Player('youtube-player', {
+                events: {
+                    // Evento cuando el reproductor está listo
+                    'onReady': onPlayerReady,
+                    // Evento de cambio de estado (Play, Pausa, Stop)
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Se puede usar para empezar mudo o con volumen bajo
+        }
+
+        function onPlayerStateChange(event) {
+            const bgMusic = document.getElementById('bg-music');
+
+            // YT.PlayerState.PLAYING (1) = Reproduciendo
+            if (event.data === YT.PlayerState.PLAYING) {
+                if (!bgMusic.paused) {
+                    bgMusic.pause();
+                    // Opcional: guardar estado de la música
+                }
+            }
+
+            // YT.PlayerState.PAUSED (2) o YT.PlayerState.ENDED (0)
+            else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                // Reanudar solo si el usuario había iniciado la música previamente (isPlaying)
+                if (isPlaying && bgMusic.paused) {
+                    bgMusic.play().catch(e => console.log("No se pudo reanudar automáticamente."));
+                }
+            }
+        }
+
+        // --- 0. SCROLL RESET Y PRELOADER ---
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+
         window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+
             const preloader = document.getElementById('preloader');
             const welcome = document.getElementById('welcome-screen');
 
-            // Ocultar preloader
             preloader.style.opacity = '0';
             preloader.style.visibility = 'hidden';
-
-            // Mostrar pantalla de bienvenida (Sobre)
             welcome.style.display = 'flex';
-            document.body.classList.add('loaded'); // Habilitar scroll
+            document.body.classList.add('loaded');
+
+            renderGallery();
+            createVideoFlowers();
         });
 
-        // --- 1. ANIMACIÓN DE GALERÍA (Fade) ---
+        // --- 1. CONFIGURACIÓN GALERÍA ---
+        const images = [
+            'img/foto_001.jpg', 'img/foto_002.jpg', 'img/foto_003.jpg', 'img/foto_004.jpg',
+            'img/foto_005.jpg', 'img/foto_006.jpg', 'img/foto_007.jpg', 'img/foto_008.jpg',
+            'img/foto_009.jpg', 'img/foto_010.jpg', 'img/foto_011.jpg', 'img/foto_012.jpg',
+            'img/foto_013.jpg', 'img/foto_014.jpg', 'img/foto_015.jpg', 'img/foto_016.jpg',
+            'img/foto_017.jpg', 'img/foto_018.jpg', 'img/foto_019.jpg'
+        ];
+
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.gallery-slide');
+        let slideInterval;
 
-        setInterval(() => {
-            // Quitar clase active del actual
-            slides[currentSlide].classList.remove('active');
-            // Calcular el siguiente índice
-            currentSlide = (currentSlide + 1) % slides.length;
-            // Poner clase active al siguiente
+        function renderGallery() {
+            const wrapper = document.getElementById('gallery-carousel');
+            wrapper.innerHTML = '';
+
+            const itemsPerSlide = window.innerWidth < 768 ? 1 : 3;
+
+            const slidesData = [];
+            for (let i = 0; i < images.length; i += itemsPerSlide) {
+                slidesData.push(images.slice(i, i + itemsPerSlide));
+            }
+
+            slidesData.forEach((group, index) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = `gallery-slide ${index === 0 ? 'active' : ''}`;
+
+                group.forEach(imgSrc => {
+                    const polDiv = document.createElement('div');
+                    polDiv.className = 'polaroid';
+                    polDiv.onclick = () => openModal(imgSrc);
+
+                    const img = document.createElement('img');
+                    img.src = imgSrc;
+
+                    polDiv.appendChild(img);
+                    slideDiv.appendChild(polDiv);
+                });
+
+                wrapper.appendChild(slideDiv);
+            });
+
+            startSlider();
+        }
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                currentSlide = 0;
+                renderGallery();
+            }, 200);
+        });
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.gallery-slide');
+            slides.forEach(s => s.classList.remove('active'));
+            currentSlide = (index + slides.length) % slides.length;
             slides[currentSlide].classList.add('active');
-        }, 4500); // Cambio cada 4.5 segundos
+        }
 
+        function nextSlide() { showSlide(currentSlide + 1); resetTimer(); }
+        function prevSlide() { showSlide(currentSlide - 1); resetTimer(); }
 
-        // --- 2. LÓGICA DE AUDIO Y ENTRADA AL SITIO ---
+        function startSlider() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => { nextSlide(); }, 4500);
+        }
+
+        function resetTimer() { clearInterval(slideInterval); startSlider(); }
+
+        // --- 2. MODAL Y SONIDO ---
+        const modal = document.getElementById('photo-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalImg = document.getElementById('modal-img');
+        const shutterSound = document.getElementById('shutter-sound');
+
+        function openModal(src) {
+            shutterSound.currentTime = 0;
+            shutterSound.play().catch(e => console.log("Sonido bloqueado"));
+
+            modalImg.src = src;
+            modal.classList.add('open');
+
+            // Pausar música si está sonando
+            if (!document.getElementById('bg-music').paused) {
+                document.getElementById('bg-music').pause();
+            }
+
+            setTimeout(() => { modalContent.classList.add('rotated'); }, 300);
+        }
+
+        function closeModal() {
+            modalContent.classList.remove('rotated');
+            setTimeout(() => {
+                modal.classList.remove('open');
+                // Reanudar música si estaba sonando antes
+                if (isPlaying && document.getElementById('bg-music').paused) {
+                    document.getElementById('bg-music').play().catch(e => console.log("No se pudo reanudar."));
+                }
+            }, 300);
+        }
+
+        // --- 3. AUDIO Y ENTRADA ---
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
         let isPlaying = false;
@@ -881,7 +1160,6 @@
             setTimeout(() => {
                 document.getElementById('welcome-screen').style.display = 'none';
             }, 1000);
-
             toggleAudio();
             createPetals();
         }
@@ -891,30 +1169,25 @@
                 audio.pause();
                 musicBtn.classList.add('paused');
             } else {
-                // Promesa para manejar bloqueos de autoplay en navegadores
-                audio.play().catch(e => console.log("Audio requiere interacción previa"));
+                audio.play().catch(e => console.log("Audio requiere toque"));
                 musicBtn.classList.remove('paused');
             }
             isPlaying = !isPlaying;
         }
 
-        // --- 3. CONTADOR REGRESIVO ---
+        // --- 4. CONTADOR ---
         const weddingDate = new Date("Feb 14, 2026 13:00:00").getTime();
-
         setInterval(() => {
             const now = new Date().getTime();
             const diff = weddingDate - now;
-
             if (diff < 0) {
                 document.getElementById("timer").innerHTML = "<div class='timer-num'>¡Llegó el día!</div>";
                 return;
             }
-
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
-
             document.getElementById("timer").innerHTML = `
                 <div class="timer-unit"><span class="timer-num">${d}</span><span class="timer-label">DÍAS</span></div>
                 <div class="timer-unit"><span class="timer-num">${h}</span><span class="timer-label">HRS</span></div>
@@ -923,48 +1196,64 @@
             `;
         }, 1000);
 
-        // --- 4. ANIMACIÓN SCROLL REVEAL ---
+        // --- 5. SCROLL REVEAL ---
         window.addEventListener('scroll', () => {
             document.querySelectorAll('.reveal').forEach(el => {
-                const top = el.getBoundingClientRect().top;
-                // Aparece cuando el elemento está a 100px del final de la pantalla
-                if (top < window.innerHeight - 100) {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
                     el.classList.add('active');
                 }
             });
         });
 
-        // --- 5. ANIMACIÓN DE PÉTALOS (Optimizado para móvil) ---
+        // --- 6. PÉTALOS (Principal) ---
         function createPetals() {
             const container = document.getElementById('petal-container');
-            // Reducir cantidad en móviles para mejor rendimiento
             const isMobile = window.innerWidth < 768;
             const limit = isMobile ? 15 : 30;
-
             for (let i = 0; i < limit; i++) {
-                setTimeout(() => {
-                    spawnPetal(container);
-                }, i * 400);
+                setTimeout(() => spawnPetal(container), i * 400);
             }
         }
-
         function spawnPetal(container) {
             const petal = document.createElement('div');
             petal.classList.add('petal');
-            // Tamaño y posición aleatorios
             const size = Math.random() * 8 + 5;
             petal.style.width = `${size}px`;
             petal.style.height = `${size}px`;
             petal.style.left = `${Math.random() * 100}vw`;
-            // Duración de caída aleatoria
             petal.style.animationDuration = `${Math.random() * 5 + 6}s`;
-
             container.appendChild(petal);
-
-            // Eliminar y recrear al terminar la animación para bucle infinito
             petal.addEventListener('animationend', () => {
                 petal.remove();
                 spawnPetal(container);
+            });
+        }
+
+        // --- 7. FLORES EN EL VIDEO ---
+        function createVideoFlowers() {
+            const container = document.getElementById('video-flower-container');
+            const isMobile = window.innerWidth < 768;
+            const limit = isMobile ? 10 : 20;
+
+            for (let i = 0; i < limit; i++) {
+                setTimeout(() => spawnVideoFlower(container), i * 600);
+            }
+        }
+
+        function spawnVideoFlower(container) {
+            const flower = document.createElement('i');
+            flower.classList.add('fas', 'fa-asterisk', 'video-flower');
+
+            flower.style.left = `${Math.random() * 100}%`;
+            flower.style.animationDuration = `${Math.random() * 5 + 8}s`;
+            flower.style.opacity = Math.random() * 0.5 + 0.2;
+            flower.style.fontSize = `${Math.random() * 10 + 10}px`;
+
+            container.appendChild(flower);
+
+            flower.addEventListener('animationend', () => {
+                flower.remove();
+                spawnVideoFlower(container);
             });
         }
     </script>
