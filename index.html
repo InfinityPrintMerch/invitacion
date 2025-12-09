@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Daniel & Brenda</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/dsJw5wzB/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. VARIABLES Y BASE --- */
+        :root {
+            --burgundy: #782626;
+            /* Color Vino Principal */
+            --gold: #C5A059;
+            /* Color Dorado */
+            --cream: #FAF9F6;
+            /* Fondo Crema Suave */
+            --text: #333333;
+            /* Color Texto Principal */
+
+            --font-script: 'Pinyon Script', cursive;
+            /* Para Nombres */
+            --font-serif: 'Playfair Display', serif;
+            /* Para Títulos y versos */
+            --font-body: 'Montserrat', sans-serif;
+            /* Para texto general */
+            --font-caps: 'Cinzel', serif;
+            /* Para subtítulos en mayúsculas */
+        }
+
+        /* Bloqueo total de la selección de texto en la página */
+        body {
+            -webkit-user-select: none;
+            /* Chrome, Safari, Opera */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Estándar */
+
+            /* Opcional: Bloquear la visualización del menú contextual (click derecho) */
+            /* pointer-events: none; - NO RECOMENDADO, rompe botones y enlaces */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            /* Inicialmente ocultamos el scroll hasta que cargue el preloader */
+            overflow: hidden;
+        }
+
+        body.loaded {
+            overflow: auto;
+            /* Reactivamos scroll una vez cargado */
+        }
+
+        /* Marco Decorativo Fijo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid var(--gold);
+            z-index: 900;
+            pointer-events: none;
+            border-radius: 6px;
+        }
+
+        /* --- 2. PRELOADER (Pantalla de carga inicial) --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            z-index: 10000;
+            /* Capa superior */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .loader-heart {
+            font-size: 3rem;
+            color: var(--burgundy);
+            animation: heartbeat 1.5s infinite;
+            margin-bottom: 20px;
+        }
+
+        .loader-text {
+            font-family: var(--font-caps);
+            color: var(--gold);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* --- 3. PANTALLA DE BIENVENIDA (Sobre) --- */
+        /* Aparece después del preloader, antes de entrar al sitio */
+        #welcome-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--cream);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .seal {
+            width: 80px;
+            height: 80px;
+            background: var(--burgundy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-family: var(--font-script);
+            font-size: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(197, 160, 89, 0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .btn-open {
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid var(--burgundy);
+            color: var(--burgundy);
+            font-family: var(--font-caps);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- 4. HEADER / PORTADA PRINCIPAL --- */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* LINK DE FONDO ACTUALIZADO */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://i.ibb.co/4nwjRbR3/IMG-20250701-193415473-HDR.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Efecto Parallax solo en escritorio */
+        @media (min-width: 1024px) {
+            header {
+                background-attachment: fixed;
+            }
+        }
+
+        .header-content {
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 20px;
+            border-radius: 4px;
+            border: 1px solid var(--gold);
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            font-family: var(--font-script);
+            /* Tamaño fluido: Mínimo 3rem, Ideal 13% del ancho, Máximo 5.5rem */
+            font-size: clamp(3rem, 13vw, 5.5rem);
+            color: var(--burgundy);
+            line-height: 1.1;
+            margin: 10px 0;
+        }
+
+        .subtitle {
+            font-family: var(--font-caps);
+            color: var(--burgundy);
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .date-display {
+            border-top: 1px solid var(--burgundy);
+            border-bottom: 1px solid var(--burgundy);
+            padding: 8px 0;
+            margin-top: 20px;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* --- 5. ESTILOS GENERALES DE SECCIÓN --- */
+        section {
+            padding: 60px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        h2 {
+            font-family: var(--font-script);
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        /* --- 6. GALERÍA ESTILO POLAROID --- */
+        .gallery-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            min-height: 450px;
+            /* Altura mínima para reservar espacio */
+        }
+
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            /* Transición suave de fundido */
+            transition: opacity 1.5s ease-in-out;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            pointer-events: none;
+        }
+
+        .gallery-slide.active {
+            position: relative;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 5;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px 10px 35px 10px;
+            /* Espacio inferior tipo polaroid */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 45%;
+            /* Móvil: 2 por fila */
+            max-width: 200px;
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+            margin-top: 10px;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid #eee;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .polaroid {
+                width: 22%;
+            }
+
+            /* Escritorio: 4 por fila */
+            .polaroid img {
+                height: 200px;
+            }
+        }
+
+        /* --- 7. VIDEO RESPONSIVE --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* Aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            border: 4px solid var(--white);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- OTROS ESTILOS (Verso, Padres, Contador, Itinerario) --- */
+        .verse-section {
+            background-color: var(--burgundy);
+            color: white;
+            text-align: center;
+        }
+
+        .verse-text {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            line-height: 1.8;
+        }
+
+        .parents-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .parents-grid {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .parents-col {
+                flex: 1;
+            }
+        }
+
+        .parents-title {
+            font-family: var(--font-caps);
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #ddd;
+            display: inline-block;
+        }
+
+        .name-item {
+            font-size: 1.1rem;
+            margin: 5px 0;
+            font-family: var(--font-serif);
+        }
+
+        .dedication-box {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--cream);
+            border-left: 3px solid var(--gold);
+            font-style: italic;
+            color: #666;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .countdown-wrap {
+            background: linear-gradient(rgba(120, 38, 38, 0.9), rgba(120, 38, 38, 0.9)), url('https://i.ibb.co/WWGzxv2w/IMG-20250412-213403054.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 10px;
+            text-align: center;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .timer-unit {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 70px;
+        }
+
+        .timer-num {
+            font-size: 2rem;
+            font-family: var(--font-caps);
+            font-weight: bold;
+            display: block;
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gold);
+            left: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            padding-left: 60px;
+            text-align: left;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--burgundy);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            box-shadow: 0 0 0 1px var(--gold);
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .timeline::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .timeline-item {
+                width: 50%;
+                padding-left: 0;
+            }
+
+            .timeline-item:nth-child(odd) {
+                left: 0;
+                text-align: right;
+                padding-right: 50px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 50%;
+                text-align: left;
+                padding-left: 50px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-icon {
+                left: auto;
+                right: -20px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-icon {
+                left: -20px;
+            }
+        }
+
+        .time {
+            font-weight: bold;
+            color: var(--gold);
+            font-family: var(--font-caps);
+            font-size: 0.9rem;
+        }
+
+        .activity {
+            font-size: 1.1rem;
+            font-family: var(--font-serif);
+            color: var(--burgundy);
+            font-weight: 600;
+        }
+
+        .location-card {
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            margin-bottom: 20px;
+            background: #fff;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .btn-map {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 30px;
+            background-color: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .music-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+            border: 2px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: spin 4s linear infinite;
+        }
+
+        .music-fab.paused {
+            animation: none;
+            background: #999;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #petal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background-color: rgba(232, 195, 186, 0.6);
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate(0, -10vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(100px, 110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            background-color: #f0ebe5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="loader-heart"><i class="fas fa-heart"></i></div>
+        <div class="loader-text">Cargando nuestra historia...</div>
+    </div>
+
+    <div id="petal-container"></div>
+
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mp3">
+    </audio>
+    <div class="music-fab paused" onclick="toggleAudio()" id="music-btn">
+        <i class="fas fa-music"></i>
+    </div>
+
+    <div id="welcome-screen" style="display:none;">
+        <div class="seal">D&B</div>
+        <p style="margin-bottom: 20px; letter-spacing: 2px; color: var(--burgundy); font-size: 0.9rem;">TE INVITAN A SU
+            BODA</p>
+        <button class="btn-open" onclick="enterSite()">Abrir</button>
+    </div>
+
+    <header>
+        <div class="header-content reveal">
+            <p class="subtitle">NOS CASAMOS</p>
+            <h1>Daniel<br>&<br>Brenda</h1>
+            <div class="date-display">
+                14 . FEBRERO . 2026
+            </div>
+        </div>
+    </header>
+
+    <section class="verse-section">
+        <div class="reveal">
+            <i class="fas fa-quote-left" style="font-size: 1.5rem; color: var(--gold); margin-bottom: 15px;"></i>
+            <p class="verse-text">
+                "El amor es paciente, es bondadoso. No se comporta con rudeza, no es egoísta, no se enoja fácilmente...
+                El amor nunca deja de ser."
+                <br><br><span style="font-size: 0.9rem;">- 1 Corintios 13</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <div class="container">
+            <h2>Con la bendición de</h2>
+
+            <div class="parents-grid">
+                <div class="parents-col">
+                    <div class="parents-title">Padres del Novio</div>
+                    <div class="name-item">Daniel Badillo García <i class="fas fa-cross"
+                            style="font-size:0.7em; color: var(--gold);"></i></div>
+                    <div class="name-item">Juana Contreras Estrada <i class="fas fa-cross"
+                            style="font-size:0.7em; color: var(--gold);"></i></div>
+                </div>
+                <div class="parents-col">
+                    <div class="parents-title">Padres de la Novia</div>
+                    <div class="name-item">Juan Martínez Carmona</div>
+                    <div class="name-item">Margarita Corona Soto</div>
+                </div>
+            </div>
+
+            <div class="dedication-box">
+                "En la memoria y amor eterno de nuestros padres, Daniel y Juana. Desde su celestial morada, sentimos la
+                luz de su guía y la bendición incondicional que nos acompaña en cada paso."
+            </div>
+
+            <div style="margin-top: 40px; text-align: center;">
+                <div class="parents-title">Padrinos de Velación</div>
+                <div class="name-item" style="color: var(--burgundy); font-weight: bold;">
+                    Maricela Badillo Contreras<br>&<br>Gabriel Daniel Malváez
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="countdown-wrap">
+        <h2 style="color: white; margin-bottom: 30px;">Falta poco...</h2>
+        <div class="timer" id="timer"></div>
+    </section>
+
+    <section class="reveal">
+        <div class="container">
+            <h2>Itinerario & Lugar</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-church"></i></div>
+                    <div class="time">1:00 PM</div>
+                    <div class="activity">Ceremonia Religiosa</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-camera"></i></div>
+                    <div class="time">2:30 PM</div>
+                    <div class="activity">Sesión de Fotos</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-glass-cheers"></i></div>
+                    <div class="time">3:30 PM</div>
+                    <div class="activity">Recepción Salón Marsuí</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-music"></i></div>
+                    <div class="time">5:00 PM</div>
+                    <div class="activity">Banquete y Baile</div>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+            <div class="location-card">
+                <i class="fas fa-church" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Ceremonia</h3>
+                <p style="color: #666; margin-top: 5px;">Iglesia de San Miguel Arcángel</p>
+                <a href="https://share.google/YDzHiqdxFStc7KM9L" target="_blank" class="btn-map">Ver Mapa</a>
+            </div>
+
+            <div class="location-card">
+                <i class="fas fa-wine-glass" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Recepción</h3>
+                <p style="color: #666; margin-top: 5px;">Salón Jardín Marsuí</p>
+                <a href="https://share.google/DR52rUnDC6u5PF0hI" target="_blank" class="btn-map">Ver Ubicación</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="reveal">
+        <div class="container">
+            <h2>Nuestra Galería</h2>
+            <div class="gallery-wrapper" id="gallery-carousel">
+
+                <div class="gallery-slide active">
+                    <div class="polaroid"><img src="https://i.ibb.co/d08btgg9/IMG-20250426-185603644-HDR-2.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/xq6YRPS1/IMG-20250427-105024668-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/8g4kMzV3/IMG-20250517-220059294.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/b5snnXkF/IMG-20250701-162815079-HDR.jpg"></div>
+                </div>
+
+                <div class="gallery-slide">
+                    <div class="polaroid"><img src="https://i.ibb.co/4nwjRbR3/IMG-20250701-193415473-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/Fkvmj8XJ/IMG-20250712-144937162-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/0RZHC6fq/IMG-20250713-172556241-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/395DqngZ/IMG-20250725-195107965-HDR.jpg"></div>
+                </div>
+
+                <div class="gallery-slide">
+                    <div class="polaroid"><img src="https://i.ibb.co/Mx7SYpM0/IMG-20250824-164403036-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/BVcVgyFj/IMG-20250907-092639301-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/39rjZrq3/IMG-20250913-141415407.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/tSV2NSV/IMG-20251108-192746397.jpg"></div>
+                </div>
+
+                <div class="gallery-slide">
+                    <div class="polaroid"><img src="https://i.ibb.co/WWGzxv2w/IMG-20250412-213403054.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/xtC2w8rC/IMG-20250426-174400498-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/MD5zQBNb/IMG-20250427-122352067-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/kgtRDQb9/IMG-20250626-171026480-HDR.jpg"></div>
+                </div>
+
+                <div class="gallery-slide">
+                    <div class="polaroid"><img src="https://i.ibb.co/nMZb1drF/IMG-20250701-200124054-HDR.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/Kpsqx6qT/IMG-20250712-084821716-HDR-2.jpg"></div>
+                    <div class="polaroid"><img src="https://i.ibb.co/tww3tMcY/IMG-20251101-194513060-HDR.jpg"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal" style="background-color: var(--burgundy); color: white; padding-bottom: 80px;">
+        <h2 style="color: var(--gold);">Nuestra Historia</h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="video-wrapper">
+                <video controls>
+                    <source src="video.mp4" type="video/mp4">
+                    Tu navegador no soporta video.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Daniel & Brenda | 2026</p>
+    </footer>
+
+    <script>
+        // --- 0. PRELOADER (Espera a que carguen todas las imágenes y recursos) ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const welcome = document.getElementById('welcome-screen');
+
+            // Ocultar preloader
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+
+            // Mostrar pantalla de bienvenida (Sobre)
+            welcome.style.display = 'flex';
+            document.body.classList.add('loaded'); // Habilitar scroll
+        });
+
+        // --- 1. ANIMACIÓN DE GALERÍA (Fade) ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.gallery-slide');
+
+        setInterval(() => {
+            // Quitar clase active del actual
+            slides[currentSlide].classList.remove('active');
+            // Calcular el siguiente índice
+            currentSlide = (currentSlide + 1) % slides.length;
+            // Poner clase active al siguiente
+            slides[currentSlide].classList.add('active');
+        }, 4500); // Cambio cada 4.5 segundos
+
+
+        // --- 2. LÓGICA DE AUDIO Y ENTRADA AL SITIO ---
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        let isPlaying = false;
+
+        function enterSite() {
+            document.getElementById('welcome-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('welcome-screen').style.display = 'none';
+            }, 1000);
+
+            toggleAudio();
+            createPetals();
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.classList.add('paused');
+            } else {
+                // Promesa para manejar bloqueos de autoplay en navegadores
+                audio.play().catch(e => console.log("Audio requiere interacción previa"));
+                musicBtn.classList.remove('paused');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // --- 3. CONTADOR REGRESIVO ---
+        const weddingDate = new Date("Feb 14, 2026 13:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+
+            if (diff < 0) {
+                document.getElementById("timer").innerHTML = "<div class='timer-num'>¡Llegó el día!</div>";
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML = `
+                <div class="timer-unit"><span class="timer-num">${d}</span><span class="timer-label">DÍAS</span></div>
+                <div class="timer-unit"><span class="timer-num">${h}</span><span class="timer-label">HRS</span></div>
+                <div class="timer-unit"><span class="timer-num">${m}</span><span class="timer-label">MIN</span></div>
+                <div class="timer-unit"><span class="timer-num">${s}</span><span class="timer-label">SEG</span></div>
+            `;
+        }, 1000);
+
+        // --- 4. ANIMACIÓN SCROLL REVEAL ---
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                // Aparece cuando el elemento está a 100px del final de la pantalla
+                if (top < window.innerHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        });
+
+        // --- 5. ANIMACIÓN DE PÉTALOS (Optimizado para móvil) ---
+        function createPetals() {
+            const container = document.getElementById('petal-container');
+            // Reducir cantidad en móviles para mejor rendimiento
+            const isMobile = window.innerWidth < 768;
+            const limit = isMobile ? 15 : 30;
+
+            for (let i = 0; i < limit; i++) {
+                setTimeout(() => {
+                    spawnPetal(container);
+                }, i * 400);
+            }
+        }
+
+        function spawnPetal(container) {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            // Tamaño y posición aleatorios
+            const size = Math.random() * 8 + 5;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+            // Duración de caída aleatoria
+            petal.style.animationDuration = `${Math.random() * 5 + 6}s`;
+
+            container.appendChild(petal);
+
+            // Eliminar y recrear al terminar la animación para bucle infinito
+            petal.addEventListener('animationend', () => {
+                petal.remove();
+                spawnPetal(container);
+            });
+        }
+    </script>
+</body>
+
+</html>
