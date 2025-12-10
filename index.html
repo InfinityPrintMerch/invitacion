@@ -76,6 +76,35 @@
             border-radius: 6px;
         }
 
+        /* --- DECORACIÓN FLORAL LATERAL FIJA (FONDO PANTALLA) --- */
+        .fixed-floral-decor {
+            position: fixed;
+            width: 200px;
+            height: 100%;
+            top: 0;
+            background-size: cover;
+            background-repeat: repeat-y;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.8;
+            background-image: url('img/flores.png');
+        }
+
+        .floral-left {
+            left: 0;
+            transform: scaleX(-1);
+        }
+
+        .floral-right {
+            right: 0;
+        }
+
+        @media (max-width: 768px) {
+            .fixed-floral-decor {
+                display: none;
+            }
+        }
+
         /* --- 2. PRELOADER --- */
         #preloader {
             position: fixed;
@@ -191,6 +220,7 @@
             background-position: center;
             position: relative;
             padding: 20px;
+            overflow: hidden;
         }
 
         @media (min-width: 1024px) {
@@ -199,16 +229,60 @@
             }
         }
 
+        /* --- HEADER FLORES (ESQUINAS) --- */
+        .box-flower {
+            position: absolute;
+            width: 250px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .flower-top-left {
+            top: -50px;
+            left: -50px;
+        }
+
+        .flower-bottom-right {
+            bottom: -50px;
+            right: -50px;
+            transform: rotate(180deg);
+        }
+
         .header-content {
             z-index: 2;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.90);
+            padding: 50px 30px;
             border-radius: 4px;
             border: 1px solid var(--gold);
             max-width: 90%;
             width: 500px;
             text-align: center;
             backdrop-filter: blur(5px);
+            position: relative;
+            overflow: visible;
+        }
+
+        .header-content h1,
+        .header-content .subtitle,
+        .header-content .date-display {
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .box-flower {
+                width: 120px;
+            }
+
+            .flower-top-left {
+                top: -30px;
+                left: -30px;
+            }
+
+            .flower-bottom-right {
+                bottom: -30px;
+                right: -30px;
+            }
         }
 
         h1 {
@@ -238,20 +312,30 @@
             width: 100%;
         }
 
-        /* --- 5. SECCIONES --- */
+        /* --- 5. SECCIONES Y CONTENEDORES --- */
         section {
             padding: 60px 20px;
             position: relative;
             z-index: 10;
         }
 
-        .container {
+        .relative-wrapper {
+            position: relative;
             max-width: 900px;
             margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
             background: white;
             padding: 40px 20px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             border-radius: 8px;
+            position: relative;
+            z-index: 2;
         }
 
         h2 {
@@ -263,9 +347,74 @@
             line-height: 1.2;
         }
 
-        /* Margen extra para separar galería */
-        .gallery-section-margin {
-            margin-top: 100px;
+        /* --- ESTILOS PARA FLORES_LINEA --- */
+        .flower-line-img {
+            position: absolute;
+            pointer-events: none;
+            width: 80px;
+            height: auto;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .itinerary-flower-left {
+            left: -150px;
+            top: 70%;
+            transform: translateY(-50%);
+            z-index: 1;
+            height: 60%;
+            width: auto;
+        }
+
+        .itinerary-flower-right {
+            right: -150px;
+            top: 30%;
+            transform: translateY(-50%) scaleX(-1);
+            z-index: 1;
+            height: 60%;
+            width: auto;
+        }
+
+        .gallery-flower-top {
+            top: -180px;
+            left: 50%;
+            transform: translateX(-50%) rotate(90deg);
+            z-index: 1;
+            width: 80%;
+        }
+
+        /* --- ESTILO PARA FLOR CENTRADA ABAJO DEL VIDEO --- */
+        .video-flower-centered {
+            width: 200px;
+            max-width: 80%;
+            transform: rotate(90deg);
+            height: auto;
+            z-index: 15;
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            .itinerary-flower-left {
+                left: -20px;
+                opacity: 0.6;
+            }
+
+            .itinerary-flower-right {
+                right: -20px;
+                opacity: 0.6;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .itinerary-flower-left,
+            .itinerary-flower-right {
+                display: none;
+            }
+
+            .video-flower-centered {
+                width: 150px;
+            }
         }
 
         /* --- 6. GALERÍA --- */
@@ -278,7 +427,6 @@
         .gallery-wrapper {
             display: grid;
             grid-template-areas: "slide";
-            overflow: hidden;
             width: 100%;
             align-items: center;
         }
@@ -321,7 +469,6 @@
             display: block;
         }
 
-        /* Ajustes ESCRITORIO */
         @media (min-width: 768px) {
             .polaroid {
                 width: 30%;
@@ -336,7 +483,6 @@
             }
         }
 
-        /* Ajustes MÓVIL GALERÍA */
         @media (max-width: 768px) {
             .polaroid img {
                 height: 450px;
@@ -358,7 +504,6 @@
             z-index: 10;
         }
 
-        /* Flechas */
         .slider-arrow {
             position: absolute;
             top: 50%;
@@ -398,7 +543,7 @@
             }
         }
 
-        /* --- MODAL (Foto Ampliada) --- */
+        /* --- MODAL --- */
         #photo-modal {
             position: fixed;
             top: 0;
@@ -428,14 +573,20 @@
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
         }
 
-        /* Estado final girado */
         .modal-polaroid.rotated {
             transform: scale(1) rotate(10deg);
             opacity: 1;
         }
 
-        /* Ajustes MODAL MÓVIL */
         @media (max-width: 768px) {
+            .gallery-flower-top {
+                top: -100px;
+                left: 50%;
+                transform: translateX(-50%) rotate(90deg);
+                z-index: 1;
+                width: 30%;
+            }
+
             .modal-polaroid {
                 max-width: 85%;
                 max-height: 70vh;
@@ -476,26 +627,68 @@
             color: black;
         }
 
-        /* --- 7. VIDEO --- */
-        .video-wrapper {
+        /* --- NUEVO ESTILO PARA EL CONTENEDOR DEL VIDEO --- */
+        .video-centered-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
             position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border: 4px solid var(--white);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             z-index: 10;
         }
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* --- VIDEO ADAPTABLE CON MAX-HEIGHT 500PX --- */
+        .responsive-video {
+            max-height: 500px;
+            width: auto;
+            max-width: 90%;
+            display: block;
+            border-radius: 10px;
         }
 
-        /* --- OTROS ESTILOS --- */
+        /* --- NUEVAS CLASES PARA FLORES DEL VIDEO --- */
+        .video-corner {
+            position: absolute;
+            width: 350px;
+            /* Tamaño escritorio */
+            z-index: 5;
+            /* Por encima del fondo, por debajo del texto/video */
+            pointer-events: none;
+            /* Permite clicks a través de la imagen */
+            opacity: 1;
+        }
+
+        .v-top-left {
+            top: -50px;
+            left: -50px;
+        }
+
+        .v-bottom-right {
+            bottom: -50px;
+            right: -50px;
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .video-corner {
+                width: 140px;
+                /* Tamaño móvil */
+                opacity: 0.8;
+            }
+
+            .v-top-left {
+                top: 0;
+                left: 0;
+            }
+
+            .v-bottom-right {
+                bottom: 0;
+                right: 0;
+            }
+        }
+
+
+        /* --- OTROS --- */
         .verse-section {
             background-color: var(--burgundy);
             color: white;
@@ -740,7 +933,6 @@
             transform: translateY(0);
         }
 
-        /* PÉTALOS FONDO (Más intensidad) */
         #petal-container {
             position: fixed;
             top: 0;
@@ -755,7 +947,6 @@
         .petal {
             position: absolute;
             background-color: rgba(232, 195, 186, 0.85);
-            /* Opacidad aumentada */
             border-radius: 150% 0 150% 0;
             animation: fall linear infinite;
         }
@@ -772,7 +963,6 @@
             }
         }
 
-        /* FLORES VIDEO */
         #video-flower-container {
             position: absolute;
             top: 0;
@@ -787,7 +977,6 @@
         .video-flower {
             position: absolute;
             color: rgba(255, 255, 255, 0.5);
-            /* Flores blancas suaves */
             font-size: 20px;
             animation: fall-flower linear infinite;
         }
@@ -820,6 +1009,9 @@
 
 <body>
 
+    <div class="fixed-floral-decor floral-left"></div>
+    <div class="fixed-floral-decor floral-right"></div>
+
     <div id="preloader">
         <div class="loader-heart"><i class="fas fa-heart"></i></div>
         <div class="loader-text">Cargando nuestra historia...</div>
@@ -847,6 +1039,9 @@
 
     <header>
         <div class="header-content reveal">
+            <img src="img/flores_esquina.png" class="box-flower flower-top-left" alt="Decoración floral">
+            <img src="img/flores_esquina.png" class="box-flower flower-bottom-right" alt="Decoración floral">
+
             <p class="subtitle">NOS CASAMOS</p>
             <h1>Daniel<br>&<br>Brenda</h1>
             <div class="date-display">
@@ -902,72 +1097,82 @@
     </section>
 
     <section class="reveal">
-        <div class="container">
-            <h2>Itinerario & Lugar</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-icon"><i class="fas fa-church"></i></div>
-                    <div class="time">1:00 PM</div>
-                    <div class="activity">Ceremonia Religiosa</div>
+        <div class="relative-wrapper">
+            <img src="img/flores_linea.png" class="flower-line-img itinerary-flower-left" alt="Decoración">
+            <img src="img/flores_linea.png" class="flower-line-img itinerary-flower-right" alt="Decoración">
+
+            <div class="container">
+                <h2>Itinerario & Lugar</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-church"></i></div>
+                        <div class="time">1:00 PM</div>
+                        <div class="activity">Ceremonia Religiosa</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-camera"></i></div>
+                        <div class="time">2:30 PM</div>
+                        <div class="activity">Sesión de Fotos</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-glass-cheers"></i></div>
+                        <div class="time">3:30 PM</div>
+                        <div class="activity">Recepción Salón Marsuí</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-music"></i></div>
+                        <div class="time">5:00 PM</div>
+                        <div class="activity">Banquete y Baile</div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon"><i class="fas fa-camera"></i></div>
-                    <div class="time">2:30 PM</div>
-                    <div class="activity">Sesión de Fotos</div>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+                <div class="location-card">
+                    <i class="fas fa-church" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                    <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Ceremonia</h3>
+                    <p style="color: #666; margin-top: 5px;">Iglesia de San Miguel Arcángel</p>
+                    <a href="https://maps.app.goo.gl/oyYWYErQ1KafeGzi7" target="_blank" class="btn-map">Ver Mapa</a>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon"><i class="fas fa-glass-cheers"></i></div>
-                    <div class="time">3:30 PM</div>
-                    <div class="activity">Recepción Salón Marsuí</div>
+                <div class="location-card">
+                    <i class="fas fa-wine-glass" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
+                    <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Recepción</h3>
+                    <p style="color: #666; margin-top: 5px;">Salón Jardín Marsuí</p>
+                    <a href="https://maps.app.goo.gl/59aWNzdaQ7h8KWy19" target="_blank" class="btn-map">Ver
+                        Ubicación</a>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon"><i class="fas fa-music"></i></div>
-                    <div class="time">5:00 PM</div>
-                    <div class="activity">Banquete y Baile</div>
-                </div>
-            </div>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
-            <div class="location-card">
-                <i class="fas fa-church" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
-                <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Ceremonia</h3>
-                <p style="color: #666; margin-top: 5px;">Iglesia de San Miguel Arcángel</p>
-                <a href="https://share.google/YDzHiqdxFStc7KM9L" target="_blank" class="btn-map">Ver Mapa</a>
-            </div>
-            <div class="location-card">
-                <i class="fas fa-wine-glass" style="font-size: 2rem; color: var(--sage); margin-bottom: 10px;"></i>
-                <h3 style="font-family: var(--font-caps); font-size: 1.1rem;">Recepción</h3>
-                <p style="color: #666; margin-top: 5px;">Salón Jardín Marsuí</p>
-                <a href="https://share.google/DR52rUnDC6u5PF0hI" target="_blank" class="btn-map">Ver Ubicación</a>
             </div>
         </div>
     </section>
 
     <section class="reveal gallery-section-margin">
-        <div class="container">
-            <h2>Nuestra Galería</h2>
-            <div class="gallery-container">
-                <div class="slider-arrow arrow-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></div>
-                <div class="slider-arrow arrow-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></div>
+        <div class="relative-wrapper">
+            <img src="img/flores_linea.png" class="flower-line-img gallery-flower-top" alt="Decoración">
 
-                <div class="gallery-wrapper" id="gallery-carousel"></div>
+            <div class="container">
+                <h2>Nuestra Galería</h2>
+                <div class="gallery-container">
+                    <div class="slider-arrow arrow-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></div>
+                    <div class="slider-arrow arrow-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="gallery-wrapper" id="gallery-carousel"></div>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="reveal"
-        style="background-color: var(--burgundy); color: white; padding-bottom: 80px; position: relative;">
-        <div id="video-flower-container"></div>
+        style="background-color: var(--burgundy); color: white; padding-bottom: 60px; position: relative; overflow: hidden;">
 
-        <h2 style="color: var(--gold); position: relative; z-index: 10;">Nuestra Historia</h2>
-        <div style="max-width: 800px; margin: 0 auto; position: relative; z-index: 10;">
-            <div class="video-wrapper">
-                <iframe id="youtube-player" width="100%" height="100%"
-                    src="https://www.youtube.com/embed/ijmErsexYRw?enablejsapi=1" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            </div>
+        <img src="img/flores_esquina.png" class="video-corner v-top-left" alt="Decoración Floral">
+        <img src="img/flores_esquina.png" class="video-corner v-bottom-right" alt="Decoración Floral">
+
+        <div id="video-flower-container"></div>
+        <div class="video-centered-container">
+            <video id="myVideo" class="responsive-video" controls playsinline>
+                <source src="video/video.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
         </div>
+
     </section>
 
     <footer>
@@ -983,68 +1188,18 @@
         </button>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
-        // Global variable for YouTube player instance
-        let player;
-
-        // Función llamada automáticamente cuando la API de YouTube esté lista
-        function onYouTubeIframeAPIReady() {
-            const bgMusic = document.getElementById('bg-music');
-
-            player = new YT.Player('youtube-player', {
-                events: {
-                    // Evento cuando el reproductor está listo
-                    'onReady': onPlayerReady,
-                    // Evento de cambio de estado (Play, Pausa, Stop)
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Se puede usar para empezar mudo o con volumen bajo
-        }
-
-        function onPlayerStateChange(event) {
-            const bgMusic = document.getElementById('bg-music');
-
-            // YT.PlayerState.PLAYING (1) = Reproduciendo
-            if (event.data === YT.PlayerState.PLAYING) {
-                if (!bgMusic.paused) {
-                    bgMusic.pause();
-                    // Opcional: guardar estado de la música
-                }
-            }
-
-            // YT.PlayerState.PAUSED (2) o YT.PlayerState.ENDED (0)
-            else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-                // Reanudar solo si el usuario había iniciado la música previamente (isPlaying)
-                if (isPlaying && bgMusic.paused) {
-                    bgMusic.play().catch(e => console.log("No se pudo reanudar automáticamente."));
-                }
-            }
-        }
-
         // --- 0. SCROLL RESET Y PRELOADER ---
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
-        }
+        window.onbeforeunload = function () { window.scrollTo(0, 0); }
 
         window.addEventListener('load', () => {
             window.scrollTo(0, 0);
-
             const preloader = document.getElementById('preloader');
             const welcome = document.getElementById('welcome-screen');
-
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-            welcome.style.display = 'flex';
-            document.body.classList.add('loaded');
-
-            renderGallery();
-            createVideoFlowers();
+            preloader.style.opacity = '0'; preloader.style.visibility = 'hidden';
+            welcome.style.display = 'flex'; document.body.classList.add('loaded');
+            renderGallery(); createVideoFlowers();
+            setupVideoAudioControl();
         });
 
         // --- 1. CONFIGURACIÓN GALERÍA ---
@@ -1062,43 +1217,32 @@
         function renderGallery() {
             const wrapper = document.getElementById('gallery-carousel');
             wrapper.innerHTML = '';
-
             const itemsPerSlide = window.innerWidth < 768 ? 1 : 3;
-
             const slidesData = [];
             for (let i = 0; i < images.length; i += itemsPerSlide) {
                 slidesData.push(images.slice(i, i + itemsPerSlide));
             }
-
             slidesData.forEach((group, index) => {
                 const slideDiv = document.createElement('div');
                 slideDiv.className = `gallery-slide ${index === 0 ? 'active' : ''}`;
-
                 group.forEach(imgSrc => {
                     const polDiv = document.createElement('div');
                     polDiv.className = 'polaroid';
                     polDiv.onclick = () => openModal(imgSrc);
-
                     const img = document.createElement('img');
                     img.src = imgSrc;
-
                     polDiv.appendChild(img);
                     slideDiv.appendChild(polDiv);
                 });
-
                 wrapper.appendChild(slideDiv);
             });
-
             startSlider();
         }
 
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                currentSlide = 0;
-                renderGallery();
-            }, 200);
+            resizeTimer = setTimeout(() => { currentSlide = 0; renderGallery(); }, 200);
         });
 
         function showSlide(index) {
@@ -1110,12 +1254,7 @@
 
         function nextSlide() { showSlide(currentSlide + 1); resetTimer(); }
         function prevSlide() { showSlide(currentSlide - 1); resetTimer(); }
-
-        function startSlider() {
-            clearInterval(slideInterval);
-            slideInterval = setInterval(() => { nextSlide(); }, 4500);
-        }
-
+        function startSlider() { clearInterval(slideInterval); slideInterval = setInterval(() => { nextSlide(); }, 4500); }
         function resetTimer() { clearInterval(slideInterval); startSlider(); }
 
         // --- 2. MODAL Y SONIDO ---
@@ -1127,15 +1266,8 @@
         function openModal(src) {
             shutterSound.currentTime = 0;
             shutterSound.play().catch(e => console.log("Sonido bloqueado"));
-
-            modalImg.src = src;
-            modal.classList.add('open');
-
-            // Pausar música si está sonando
-            if (!document.getElementById('bg-music').paused) {
-                document.getElementById('bg-music').pause();
-            }
-
+            modalImg.src = src; modal.classList.add('open');
+            if (!document.getElementById('bg-music').paused) { document.getElementById('bg-music').pause(); }
             setTimeout(() => { modalContent.classList.add('rotated'); }, 300);
         }
 
@@ -1143,7 +1275,6 @@
             modalContent.classList.remove('rotated');
             setTimeout(() => {
                 modal.classList.remove('open');
-                // Reanudar música si estaba sonando antes
                 if (isPlaying && document.getElementById('bg-music').paused) {
                     document.getElementById('bg-music').play().catch(e => console.log("No se pudo reanudar."));
                 }
@@ -1157,22 +1288,42 @@
 
         function enterSite() {
             document.getElementById('welcome-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('welcome-screen').style.display = 'none';
-            }, 1000);
-            toggleAudio();
-            createPetals();
+            setTimeout(() => { document.getElementById('welcome-screen').style.display = 'none'; }, 1000);
+            toggleAudio(); createPetals();
         }
 
         function toggleAudio() {
-            if (isPlaying) {
-                audio.pause();
-                musicBtn.classList.add('paused');
-            } else {
-                audio.play().catch(e => console.log("Audio requiere toque"));
-                musicBtn.classList.remove('paused');
-            }
+            if (isPlaying) { audio.pause(); musicBtn.classList.add('paused'); }
+            else { audio.play().catch(e => console.log("Audio requiere toque")); musicBtn.classList.remove('paused'); }
             isPlaying = !isPlaying;
+        }
+
+        // --- 3.1 CONTROL DE AUDIO PARA VIDEO LOCAL ---
+        function setupVideoAudioControl() {
+            const myVideo = document.getElementById('myVideo');
+            const bgMusic = document.getElementById('bg-music');
+
+            if (myVideo) {
+                myVideo.addEventListener('play', () => {
+                    // Si la música de fondo suena, pausarla
+                    if (!bgMusic.paused) {
+                        bgMusic.pause();
+                    }
+                });
+
+                myVideo.addEventListener('pause', () => {
+                    // Si la música estaba activada globalmente (isPlaying es true) y pausamos el video, reanudar música
+                    if (isPlaying && bgMusic.paused) {
+                        bgMusic.play().catch(e => console.log("Error al reanudar música"));
+                    }
+                });
+
+                myVideo.addEventListener('ended', () => {
+                    if (isPlaying && bgMusic.paused) {
+                        bgMusic.play().catch(e => console.log("Error al reanudar música"));
+                    }
+                });
+            }
         }
 
         // --- 4. CONTADOR ---
@@ -1205,56 +1356,39 @@
             });
         });
 
-        // --- 6. PÉTALOS (Principal) ---
+        // --- 6. PÉTALOS Y FLORES ---
         function createPetals() {
             const container = document.getElementById('petal-container');
             const isMobile = window.innerWidth < 768;
             const limit = isMobile ? 15 : 30;
-            for (let i = 0; i < limit; i++) {
-                setTimeout(() => spawnPetal(container), i * 400);
-            }
+            for (let i = 0; i < limit; i++) { setTimeout(() => spawnPetal(container), i * 400); }
         }
         function spawnPetal(container) {
             const petal = document.createElement('div');
             petal.classList.add('petal');
             const size = Math.random() * 8 + 5;
-            petal.style.width = `${size}px`;
-            petal.style.height = `${size}px`;
+            petal.style.width = `${size}px`; petal.style.height = `${size}px`;
             petal.style.left = `${Math.random() * 100}vw`;
             petal.style.animationDuration = `${Math.random() * 5 + 6}s`;
             container.appendChild(petal);
-            petal.addEventListener('animationend', () => {
-                petal.remove();
-                spawnPetal(container);
-            });
+            petal.addEventListener('animationend', () => { petal.remove(); spawnPetal(container); });
         }
 
-        // --- 7. FLORES EN EL VIDEO ---
         function createVideoFlowers() {
             const container = document.getElementById('video-flower-container');
             const isMobile = window.innerWidth < 768;
             const limit = isMobile ? 10 : 20;
-
-            for (let i = 0; i < limit; i++) {
-                setTimeout(() => spawnVideoFlower(container), i * 600);
-            }
+            for (let i = 0; i < limit; i++) { setTimeout(() => spawnVideoFlower(container), i * 600); }
         }
-
         function spawnVideoFlower(container) {
             const flower = document.createElement('i');
             flower.classList.add('fas', 'fa-asterisk', 'video-flower');
-
             flower.style.left = `${Math.random() * 100}%`;
             flower.style.animationDuration = `${Math.random() * 5 + 8}s`;
             flower.style.opacity = Math.random() * 0.5 + 0.2;
             flower.style.fontSize = `${Math.random() * 10 + 10}px`;
-
             container.appendChild(flower);
-
-            flower.addEventListener('animationend', () => {
-                flower.remove();
-                spawnVideoFlower(container);
-            });
+            flower.addEventListener('animationend', () => { flower.remove(); spawnVideoFlower(container); });
         }
     </script>
 </body>
